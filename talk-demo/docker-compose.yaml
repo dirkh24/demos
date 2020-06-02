@@ -1,4 +1,4 @@
-version: "3.7"
+version: "3.8"
 services:
   db:
     image: mysql:8.0.19
@@ -19,11 +19,24 @@ services:
     restart: always
     secrets:
       - db-password
+    volumes:
+        - ./app/src:/src
     ports:
       - 5000:5000
-      - 3000:3000
+      - 5678:5678
     networks:
       - backnet
+      - frontnet
+
+  app2:
+    build: app2
+    restart: always
+    volumes:
+      - ./app2/src:/src
+    ports:
+      - 6000:6000
+      - 5679:5679
+    networks:
       - frontnet
 
   web:
